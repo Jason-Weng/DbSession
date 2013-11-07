@@ -31,11 +31,37 @@ class PdoDatabaseWrapper
         $this->dbh = new PDO($dsn, $user, $password, $options);
     }
 
+    /*
+     * Prepare a query, use bind to bind dynamic values.
+     * 
+     * @param string $query
+     * @return void
+     */
     public function query($query)
     {
         $this->stmt = $this->dbh->prepare($query);
     }
 
+	/**
+	 * (PHP 5 &gt;= 5.1.0, PECL pdo &gt;= 1.0.0)<br/>
+	 * Binds a value to a parameter
+	 * @link http://php.net/manual/en/pdostatement.bindvalue.php
+	 * @param mixed $parameter <p>
+	 * Parameter identifier. For a prepared statement using named
+	 * placeholders, this will be a parameter name of the form
+	 * :name. For a prepared statement using
+	 * question mark placeholders, this will be the 1-indexed position of
+	 * the parameter.
+	 * </p>
+	 * @param mixed $value <p>
+	 * The value to bind to the parameter.
+	 * </p>
+	 * @param int $type [optional] <p>
+	 * Explicit data type for the parameter using the PDO::PARAM_*
+	 * constants.
+	 * </p>
+	 * @return void
+	 */
     public function bind($param, $value, $type = null)
     {
         if (is_null($type)) {
@@ -94,6 +120,12 @@ class PdoDatabaseWrapper
         return $this->stmt->debugDumpParams();
     }
     
+    /*
+     * The PDO class has no close function, so let's just tell the caller:
+     * "Yeah, all good!"
+     * 
+     * @return boolean
+     */
     public function close(){
         return true;
     }

@@ -3,6 +3,7 @@
 /**
  * DbSession will store and retrieve session data from a database table.
  * The data is base64 encoded in case we store binary data inside the session.
+ * It uses the same column names as Laravel 4 database session.
  */
 class DbSession
 {
@@ -40,7 +41,9 @@ class DbSession
     }
 
     /**
-     * Open
+     * Open session storage.
+     * 
+     * @return boolean
      */
     public function open()
     {
@@ -54,22 +57,20 @@ class DbSession
     }
 
     /**
-     * Close
+     * Close session storage.
+     * 
+     * @return boolean
      */
     public function close()
     {
-        // Close the database connection
-        // If successful
-        if ($this->db->close()) {
-            // Return True
-            return true;
-        }
-        // Return False
-        return false;
+        return $this->db->close();
     }
 
     /**
-     * Read
+     * Read payload from session.
+     * 
+     * @param int $id
+     * @return mixed
      */
     public function read($id)
     {
@@ -93,7 +94,11 @@ class DbSession
     }
 
     /**
-     * Write
+     * Write to session.
+     * 
+     * @param int $id
+     * @param mixed $payload
+     * @return boolean
      */
     public function write($id, $payload)
     {
@@ -114,7 +119,10 @@ class DbSession
     }
 
     /**
-     * Destroy
+     * Destroy session.
+     * 
+     * @param int $id
+     * @return boolean
      */
     public function destroy($id)
     {
@@ -130,6 +138,9 @@ class DbSession
 
     /**
      * Garbage Collection
+     * 
+     * @param int $max
+     * @return boolean
      */
     public function gc($max)
     {
