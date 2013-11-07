@@ -8,7 +8,7 @@ require_once(__DIR__ . "/Database/PdoDatabaseWrapper.php");
 //session_set_cookie_params(0, "/", ".example.com");
 
 $database = new PdoDatabaseWrapper("localhost", "dbname", "username", "password");
-$session = new DbSession($database, "www.example.com");
+$session = new DbSession($database);
 
 
 if (empty($_SESSION['test'])) {
